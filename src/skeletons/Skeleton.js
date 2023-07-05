@@ -1,5 +1,4 @@
 import React from "react";
-import "./Skeleton.css";
 import { motion } from "framer-motion";
 
 export const Skeleton = ({ type, onClose }) => {
@@ -27,7 +26,7 @@ export const Skeleton = ({ type, onClose }) => {
       <div className="w-full flex justify-between p-4">
         <div className="mr-4 flex flex-col gap-4">
           {[0, 1, 2, 3, 4, 5].map((n) => (
-            <p
+            <div
               key={n}
               className="bg-gray-300 px-12 rounded-lg w-48 h-4 relative"
             >
@@ -47,7 +46,7 @@ export const Skeleton = ({ type, onClose }) => {
                   ease: "linear",
                 }}
               ></motion.p>
-            </p>
+            </div>
           ))}
         </div>
         <div className="w-[70%] flex flex-col gap-4">
