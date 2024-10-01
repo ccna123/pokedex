@@ -16,9 +16,8 @@ export const Card = ({ name, sprite, types, types_color, id, onClick }) => {
       <div className="grid grid-cols-2 gap-5 mt-2">
         {types.map((type) => (
           <p
-            className={`${
-              types_color[type.type.name]
-            } text-black w-fit px-2 rounded-lg`}
+            className={`${types_color[type.type.name]
+              } text-black w-fit px-2 rounded-lg`}
             key={type.slot}
           >
             {type.type.name}

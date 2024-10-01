@@ -20,8 +20,9 @@ const TYPES_COLOR = {
   psychic: "bg-pink-600",
   ghost: "bg-indigo-600",
   ice: "bg-sky-500",
-  steel: "bg-zinc-600",
+  steel: "bg-zinc-300",
   dragon: "bg-orange-500",
+  dark: "bg-gray-700"
 };
 
 export const Main = () => {
@@ -58,7 +59,7 @@ export const Main = () => {
       }
     };
     fetchPokemonData();
-  }, [currentPage]);
+  }, [currentPage, filterType]);
 
   const handlePrev = () => {
     setCurrentPage((prev) => prev - 1);
@@ -85,6 +86,7 @@ export const Main = () => {
   };
 
   const handleFilterType = async (e) => {
+    setFilterType(e.target.value);
     const res = await axios.get(
       `https://pokeapi.co/api/v2/type/${e.target.value}?limit=20&offset=${(currentPage - 1) * 20
       }`
@@ -92,62 +94,72 @@ export const Main = () => {
     const pokemonData = res.data.pokemon.map((pokemon) => pokemon.pokemon);
     const pokemonDetail = await fetchPokemonDetail(pokemonData);
     setPokemon(pokemonDetail);
-    setFilterType(e.target.value);
   };
+
+  const handleResetTypeFilter = () => {
+    setFilterType("")
+  }
   return (
     <div className="App bg-slate-800 min-h-max w-full text-white font-mono">
       <header className="p-4 flex justify-center">
         <img src="/pokedex.png" alt="" />
       </header>
 
-      <section
-        className="flex justify-center items-center gap-4 mb-4"
-        style={{ border: ["1px solid red"] }}
-      >
-        <input
-          type="text"
-          value={pokemonName}
-          onChange={(e) => setPokemonName(e.target.value)}
-          placeholder="Enter pokemon name"
-          className="p-2 rounded-md w-full md:w-[50%] text-black"
-        />
-        <button
-          onClick={handleSearch}
-          className="bg-green-400 rounded-lg text-white hover:scale-105 duration-100 p-2"
+      <div className="md:w-[100%] lg:w-[50%] mx-auto">
+        <section
+          className="flex justify-center items-center gap-4 mb-4"
         >
-          Search
-        </button>
-      </section>
+          <input
+            type="text"
+            value={pokemonName}
+            onChange={(e) => setPokemonName(e.target.value)}
+            placeholder="Enter pokemon name"
+            className="p-2 rounded-md w-full md:w-[50%] text-black"
+          />
+          <button
+            onClick={handleSearch}
+            className="bg-green-400 rounded-lg text-white hover:scale-105 duration-100 p-2"
+          >
+            Search
+          </button>
+        </section>
 
-      <section
-        className="w-full md:w-[50%] mx-auto flex justify-around my-6"
-        style={{ border: ["1px solid red"] }}
-      >
-        <label htmlFor="type">Type</label>
-        <select
-          className="w-full ml-4 text-black"
-          value={filterType}
-          onChange={handleFilterType}
+        <section
+          className="w-full md:w-[50%] mx-auto flex justify-around my-6"
         >
-          <option value="all">All</option>
-          <option value="fire">Fire</option>
-          <option value="water">Water</option>
-          <option value="poison">Poison</option>
-          <option value="grass">Grass</option>
-          <option value="rock">Rock</option>
-          <option value="ground">Ground</option>
-          <option value="electric">Electric</option>
-          <option value="steel">Steel</option>
-          <option value="ice">Ice</option>
-          <option value="dragon">Dragon</option>
-          <option value="psychic">Psychic</option>
-          <option value="bug">Bug</option>
-          <option value="normal">Normal</option>
-          <option value="fighting">Fighting</option>
-          <option value="flying">Flying</option>
-          <option value="fairy">Fairy</option>
-        </select>
-      </section>
+          <label htmlFor="type">Type</label>
+          <select
+            className="w-full ml-4 text-black rounded-md"
+            value={filterType}
+            onChange={handleFilterType}
+          >
+            <option value="all">All</option>
+            <option value="fire">Fire</option>
+            <option value="water">Water</option>
+            <option value="poison">Poison</option>
+            <option value="grass">Grass</option>
+            <option value="rock">Rock</option>
+            <option value="ground">Ground</option>
+            <option value="electric">Electric</option>
+            <option value="steel">Steel</option>
+            <option value="ice">Ice</option>
+            <option value="dragon">Dragon</option>
+            <option value="psychic">Psychic</option>
+            <option value="bug">Bug</option>
+            <option value="normal">Normal</option>
+            <option value="fighting">Fighting</option>
+            <option value="flying">Flying</option>
+            <option value="fairy">Fairy</option>
+            <option value="dark">Dark</option>
+          </select>
+        </section>
+
+        <div className="flex justify-center my-4">
+          <button onClick={handleResetTypeFilter} className="bg-green-400 rounded-lg text-white hover:scale-105 duration-100 p-2">
+            Reset
+          </button>
+        </div>
+      </div>
 
       <div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-4">
         {pokemon.map((p, index) => (

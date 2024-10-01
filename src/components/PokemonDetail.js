@@ -35,56 +35,57 @@ export const PokemonDetail = ({ id, onClose, types_color }) => {
 
     const timeoutId = setTimeout(fetchData, 2000);
 
+
     return () => clearTimeout(timeoutId);
   }, []);
   return (
     <div className="fixed top-0 left-0 justify-center items-center bg-black w-full flex h-full bg-opacity-30">
-      <div className="bg-gradient-to-r from-lime-300 to-green-200 text-black rounded-lg w-full mx-4 lg:w-[50%] p-4 flex flex-col justify-center items-center">
+      <div className="relative bg-gradient-to-r from-lime-300 to-green-200 text-black rounded-lg w-full mx-4 lg:w-[80%] p-4 flex flex-col justify-center items-center">
         {pokemon.length === 0 ? (
           <Skeleton onClose={onClose} />
         ) : (
           <>
-            <img
-              src={pokemon.sprites?.front_default}
-              className="w-52 h-56"
-              alt="image"
-            />
-
-            <div className="w-full flex p-4 rounded-lg shadow-lg bg-slate-200">
-              <div className="mr-4 flex flex-col gap-4">
-                {pokemon.stats &&
-                  pokemon.stats.map((stat, index) => (
-                    <p key={index}>{stat.stat.name}</p>
-                  ))}
-              </div>
-              <div className="w-[70%] flex flex-col gap-4">
-                {[0, 1, 2, 3, 4, 5].map((n) => (
-                  <div
-                    key={n}
-                    className="relative rounded-full bg-gray-500 h-6"
-                  >
-                    <p className="absolute left-[50%]">
-                      {pokemon.stats && pokemon.stats[n].base_stat}
-                    </p>
+            <div className="flex justify-center w-full h-64">
+              <img
+                src={pokemon.sprites?.front_default}
+                className="w-48 h-52"
+                alt="image"
+              />
+              <div className="w-full flex p-4 rounded-lg shadow-lg bg-slate-200">
+                <div className="mr-4 flex flex-col gap-4">
+                  {pokemon.stats &&
+                    pokemon.stats.map((stat, index) => (
+                      <p key={index}>{stat.stat.name}</p>
+                    ))}
+                </div>
+                <div className="w-[70%] flex flex-col gap-4">
+                  {[0, 1, 2, 3, 4, 5].map((n) => (
                     <div
-                      className={`rounded-lg bg-green-400 h-full`}
-                      style={{
-                        width: [
-                          `${
-                            pokemon.stats &&
+                      key={n}
+                      className="relative rounded-full bg-gray-500 h-6"
+                    >
+                      <p className="absolute left-[50%]">
+                        {pokemon.stats && pokemon.stats[n].base_stat}
+                      </p>
+                      <div
+                        className={`rounded-lg bg-green-400 h-full`}
+                        style={{
+                          width: [
+                            `${pokemon.stats &&
                             (pokemon.stats[n].base_stat / 255) * 100
-                          }%`,
-                        ],
-                      }}
-                    ></div>
-                  </div>
-                ))}
+                            }%`,
+                          ],
+                        }}
+                      ></div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
-            <div className="bg-slate-100 rounded-lg shadow-lg w-full flex justify-around mt-8">
+            <div className="bg-slate-100 rounded-lg shadow-lg w-full flex justify-around mt-4">
               <div className="p-4">
-                <h1 className="mb-4 text-center text-4xl">Strength</h1>
+                <h1 className="mb-4 text-center text-2xl">Strength</h1>
                 <div className="grid grid-cols-3 gap-4">
                   {strength.map((s, index) => (
                     <p
@@ -97,7 +98,7 @@ export const PokemonDetail = ({ id, onClose, types_color }) => {
                 </div>
               </div>
               <div className="p-4">
-                <h1 className="mb-4 text-center text-4xl">Weakness</h1>
+                <h1 className="mb-4 text-center text-2xl">Weakness</h1>
                 <div className="grid grid-cols-3 gap-4">
                   {weakness.map((s, index) => (
                     <p
@@ -113,7 +114,7 @@ export const PokemonDetail = ({ id, onClose, types_color }) => {
 
             <button
               onClick={onClose}
-              className="my-8 bg-amber-400 rounded-full hover:scale-105 duration-100 px-4 py-2"
+              className="my-4 bg-amber-400 rounded-full hover:scale-105 duration-100 px-4 py-2"
             >
               Close
             </button>
